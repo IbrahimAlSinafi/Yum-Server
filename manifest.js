@@ -3,6 +3,7 @@
 
 const properties = {
   serviceName: 'Yum-Server',
+  stationUrl: 'https://gbfs.divvybikes.com/gbfs/en/station_information.json',
   stationId: '2',
   stations: [{
     '01 - Rental Details Rental ID': '22178576',
