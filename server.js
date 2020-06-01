@@ -6,6 +6,7 @@ const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
 const sanity = require('./lib/endpoints/sanity');
 const station = require('./lib/endpoints/station')
+const authenticateUser = require('./lib/endpoints/authenticateUser');
 const manifest = require('./manifest');
 
 const instantiateServer = async () => {
@@ -33,6 +34,12 @@ const instantiateServer = async () => {
       path: '/station',
       handler: station.handler,
       config: station.config,
+    },
+    {
+      method: 'POST',
+      path: '/token',
+      handler: authenticateUser.handler,
+      config: authenticateUser.config,
     },
   ]);
   try {
