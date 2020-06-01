@@ -1,6 +1,3 @@
-// require('dotenv').config({ path: `${__dirname}/.env` });
-// const Confidence = require('confidence');
-
 const properties = {
   serviceName: 'Yum-Server',
   stationUrl: 'https://gbfs.divvybikes.com/gbfs/en/station_information.json',
@@ -40,8 +37,5 @@ const properties = {
     '05 - Member Details Member Birthday Year': '1981'
   }]
 };
-
-// const store = new Confidence.Store(properties);
-// const manifest = store.get('/', { env: process.env.NODE_ENV });
 
 module.exports = properties;
