@@ -135,9 +135,7 @@ This project has 0 vulnerabilities as if today June, 1st 2020.
 Using postman to check all these RESTFUL APIs.
 
 
-### 
-
-##Dependencies being used:
+## Dependencies being used:
 * eslint -> to auto fix code indent.
 * nodemon -> npm run watch (to help for debugging)
 * lodash -> to easy validate nested object.
