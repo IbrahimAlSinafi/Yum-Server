@@ -2,7 +2,7 @@ const oneStationResponse = {
   data: {
     authorized: true,
     code: 200,
-    stations: [
+    response: [
       {
         rental_uris: [Object],
         has_kiosk: true,

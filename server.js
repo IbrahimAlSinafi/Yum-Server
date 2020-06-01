@@ -5,7 +5,7 @@ const HapiSwagger = require('hapi-swagger');
 const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
 const sanity = require('./lib/endpoints/sanity');
-const station = require('./lib/endpoints/station')
+const divvy = require('./lib/endpoints/divvy')
 const authenticateUser = require('./lib/endpoints/authenticateUser');
 const manifest = require('./manifest');
 
@@ -31,9 +31,9 @@ const instantiateServer = async () => {
     },
     {
       method: 'GET',
-      path: '/station',
-      handler: station.handler,
-      config: station.config,
+      path: '/divvy/{codename}',
+      handler: divvy.handler,
+      config: divvy.config,
     },
     {
       method: 'POST',

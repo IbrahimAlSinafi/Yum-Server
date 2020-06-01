@@ -4,50 +4,68 @@ jest.mock('node-fetch', ()=>jest.fn())
 const fetch = require('node-fetch');
 
 const { oneStationResponse } = require('../fixtures/oneStationResponse');
-const { retrieveOneStation } = require('../lib/helper/retrieveOneStation');
+const { oneStation } = require('../lib/helper/oneStation');
 const { stationId } = require('../manifest');
     
 describe('mocking node-fetch call', () => {
-  const request1 = {
-    'headers': {
-      'authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSWJyYWhpbSIsImlhdCI6MTU5MDk4MzYyNH0.3pAmcBJq87LyuRzTUDhcaVjtU6v6ZHnWnA_kUnJQU7k',
-    }
+  const authenticationRes = {
+    authorized: true,
+    code: 200,
+    response: [
+      {
+        rental_uris: [Object],
+        has_kiosk: true,
+        station_type: 'classic',
+        eightd_has_key_dispenser: false,
+        lon: -87.62054800987242,
+        electric_bike_surcharge_waiver: false,
+        station_id: '2',
+        external_id: 'a3a36d9e-a135-11e9-9cda-0a87ae2ba916',
+        capacity: 39,
+        name: 'Buckingham Fountain',
+        rental_methods: [Array],
+        short_name: '15541',
+        eightd_station_services: [],
+        lat: 41.87651122881695
+      }
+    ]
   }
+
   it('mocking retrieveOneStation https call with correct authentication', async () => {
     fetch.mockResolvedValueOnce({json: () => oneStationResponse});
-    const res = await retrieveOneStation(request1, stationId);
+    const res = await oneStation(stationId, authenticationRes);
     expect(res).toEqual(oneStationResponse.data);
   });
 
-  const request2 = {
-    'headers': {
-      'authorization': 'Bearer ' + 'fake JWT',
-    }
+  const authenticationRes2 = {
+    authorized: false,
+    code: 403,
+    response: 'forbidden'
   }
 
   it('mocking retrieveOneStation https call with forbidden authentication', async () => {
     fetch.mockResolvedValueOnce({json: () => oneStationResponse});
-    const res = await retrieveOneStation(request2, stationId);
+    const res = await oneStation(stationId, authenticationRes2);
     expect(res).toEqual({
       'authorized': false,
       'code': 403,
-      'stations': 'forbidden',
+      'response': 'forbidden',
     });
   });
 
-  const request3 = {
-    'headers': {
-      'authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWxpIiwiaWF0IjoxNTkwOTg2NTQyfQ.fWC4wblT3sy5Z3O6QOVXQ0Ugsh_Vdox20EW7sMvY3us'
-    }
+  const authenticationRes3 = {
+    authorized: false,
+    code: 401,
+    response: 'unauthorized'
   }
 
   it('mocking retrieveOneStation https call with unauthorized authentication <using token for a differnt user not listed in manifest>', async () => {
     fetch.mockResolvedValueOnce({json: () => oneStationResponse});
-    const res = await retrieveOneStation(request3, stationId);
+    const res = await oneStation(stationId, authenticationRes3);
     expect(res).toEqual({
       'authorized': false,
       'code': 401,
-      'stations': 'unauthorized',
+      'response': 'unauthorized',
     });
   });
 });
