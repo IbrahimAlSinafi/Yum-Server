@@ -110,7 +110,7 @@ This project has 0 vulnerabilities as if today June, 1st 2020.
 
 - `-` .nvmrc
 	* Lock down Node Version Manager (NVM) to a specific version. I used the most recent node version to prevent install any out of date dependencies. 
-[nvm install] (https://medium.com/@jamesauble/install-nvm-on-mac-with-brew-adb921fb92cc)
+    [nvm install](https://medium.com/@jamesauble/install-nvm-on-mac-with-brew-adb921fb92cc)
 
 - `-` .nycrc.json
 	* Here, we can lock down the coverage percentage to ensure it meets the production requirments. This should be validated during the pipeline deployment.
